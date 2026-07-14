@@ -15,3 +15,4 @@ export type { FilterChip } from "./components/FilterChips";
 export { ChatWidget } from "./components/ChatWidget";
 export type { ChatWidgetProps } from "./components/ChatWidget";
 export { cn } from "./lib/cn";
+export { extractApiErrorMessage } from "./lib/errors";

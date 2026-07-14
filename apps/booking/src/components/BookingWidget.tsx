@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Input } from "@813bnb/ui";
+import { Button, Input, extractApiErrorMessage } from "@813bnb/ui";
 
 interface BookingWidgetProps {
   unitId: string;
@@ -79,7 +79,7 @@ export function BookingWidget({
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error?.formErrors?.[0] ?? data.error ?? "Something went wrong.");
+        setError(extractApiErrorMessage(data.error, "Something went wrong."));
         return;
       }
       router.push(`/checkout/${data.bookingId}`);

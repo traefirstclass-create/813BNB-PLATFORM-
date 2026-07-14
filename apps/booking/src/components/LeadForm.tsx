@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Button, Input, Textarea } from "@813bnb/ui";
+import { Button, Input, Textarea, extractApiErrorMessage } from "@813bnb/ui";
 
 interface LeadFormProps {
   sourcePage: string;
@@ -35,7 +35,7 @@ export function LeadForm({ sourcePage, submitLabel = "Request info", messagePlac
       });
       if (!res.ok) {
         const data = await res.json();
-        setErrorMessage(data.error?.formErrors?.[0] ?? data.error ?? "Something went wrong.");
+        setErrorMessage(extractApiErrorMessage(data.error, "Something went wrong."));
         setStatus("error");
         return;
       }
