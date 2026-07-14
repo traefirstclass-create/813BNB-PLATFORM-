@@ -4,19 +4,19 @@
 
 generator client {
   provider      = "prisma-client-js"
-  // Generated into a plain directory inside the package's own source tree
-  // instead of the default node_modules/.pnpm/... location. Next.js's
-  // serverless file tracer on Vercel couldn't reliably discover the native
-  // query-engine binary at the default deeply-nested pnpm virtual-store
-  // path (symlinks + hoisting patterns didn't fix it) — a plain relative
-  // import of real files on disk traces correctly with no special config.
-  output        = "../src/generated/prisma"
-  // "native" covers local dev (macOS/Linux). rhel-openssl-3.0.x is
-  // explicitly listed because that's Vercel's serverless Lambda runtime —
-  // relying on "native" alone during `prisma generate` (which runs in
-  // Vercel's build container, not guaranteed to be ABI-identical to the
-  // Lambda runtime) is what caused "Query Engine for runtime
-  // rhel-openssl-3.0.x not found" in production. See CONTENT-TODO.md.
+  // A custom `output` (generating into packages/db/src/generated) was
+  // tried and reverted: Next.js's transpilePackages bundles packages/db
+  // through webpack, and webpack rewrites the generated client's __dirname
+  // to a synthetic bundler path that doesn't exist on disk at runtime,
+  // breaking Prisma's dynamic engine-binary lookup in a *different* way.
+  // Keeping the default output (inside node_modules/@prisma/client) means
+  // Next.js's default externals behavior leaves it un-bundled, so
+  // __dirname stays real at runtime — the only remaining problem is
+  // getting Vercel's file tracer to copy the engine binary alongside it,
+  // handled in next.config.mjs. "native" covers local dev; rhel-openssl-3.0.x
+  // is Vercel's serverless Lambda runtime, explicit because `prisma
+  // generate` runs in Vercel's build container, not guaranteed ABI-identical
+  // to the Lambda runtime. See CONTENT-TODO.md.
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 

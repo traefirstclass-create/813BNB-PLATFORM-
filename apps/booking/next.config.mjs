@@ -12,17 +12,24 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
-  // Fixes the monorepo's relative-path resolution for Vercel's serverless
-  // file tracer. Combined with generating the Prisma client into a plain
-  // directory (packages/db/src/generated/prisma, see schema.prisma) instead
-  // of leaving it in pnpm's nested virtual store, this ensures the native
-  // query-engine binary actually ships with the deployed function — without
-  // it, every DB-touching route 500s in production with "could not locate
-  // the Query Engine for runtime ...". See CONTENT-TODO.md.
+  // Vercel's serverless file tracer doesn't discover Prisma's native
+  // query-engine binary on its own in this pnpm monorepo, so every
+  // DB-touching route 500s in production with "could not locate the Query
+  // Engine for runtime rhel-openssl-3.0.x". Fix verified locally by
+  // inspecting the actual .next/server/**/*.nft.json trace output — a
+  // recursive "**" glob into node_modules/.pnpm crashes the build with an
+  // OOM (it tries to enumerate the entire store), so this uses a single
+  // non-recursive wildcard at just the version-hash path segment instead,
+  // which stays resilient to Prisma version bumps without the blow-up.
+  // outputFileTracingRoot must stay under `experimental` for this Next
+  // version — moving it top-level silently no-ops with a config warning.
+  // See CONTENT-TODO.md.
   experimental: {
     outputFileTracingRoot: monorepoRoot,
     outputFileTracingIncludes: {
-      "/**": ["./packages/db/src/generated/prisma/**/*"],
+      "/**": [
+        "../../node_modules/.pnpm/@prisma+client@*/node_modules/.prisma/client/*",
+      ],
     },
   },
 };

@@ -17,7 +17,9 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: monorepoRoot,
     outputFileTracingIncludes: {
-      "/**": ["./packages/db/src/generated/prisma/**/*"],
+      "/**": [
+        "../../node_modules/.pnpm/@prisma+client@*/node_modules/.prisma/client/*",
+      ],
     },
   },
 };
