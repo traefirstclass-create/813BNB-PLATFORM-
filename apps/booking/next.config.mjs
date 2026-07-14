@@ -12,20 +12,17 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
-  // Without these, Vercel's serverless bundler doesn't discover Prisma's
-  // native query-engine binary in a pnpm monorepo (it's loaded dynamically
-  // at runtime, not via a static import the file tracer can follow), and
-  // every DB-touching route 500s in production with "could not locate the
-  // Query Engine for runtime ...". outputFileTracingRoot fixes the tracer's
-  // relative-path resolution across the workspace; outputFileTracingIncludes
-  // force-includes the engine binary regardless. See CONTENT-TODO.md.
+  // Fixes the monorepo's relative-path resolution for Vercel's serverless
+  // file tracer. Combined with generating the Prisma client into a plain
+  // directory (packages/db/src/generated/prisma, see schema.prisma) instead
+  // of leaving it in pnpm's nested virtual store, this ensures the native
+  // query-engine binary actually ships with the deployed function — without
+  // it, every DB-touching route 500s in production with "could not locate
+  // the Query Engine for runtime ...". See CONTENT-TODO.md.
   outputFileTracingRoot: monorepoRoot,
   experimental: {
     outputFileTracingIncludes: {
-      "/**/*": [
-        "./node_modules/.pnpm/**/node_modules/.prisma/client/**/*",
-        "./node_modules/.prisma/client/**/*",
-      ],
+      "/**": ["./packages/db/src/generated/prisma/**/*"],
     },
   },
 };

@@ -17,6 +17,7 @@ playwright-report/
 test-results/
 .pnpm-store/
 prisma/dev.db
+packages/db/src/generated/
 *.tsbuildinfo
 .vscode/*
 !.vscode/extensions.json
