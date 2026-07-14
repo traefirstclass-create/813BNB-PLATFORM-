@@ -39,17 +39,32 @@ pnpm install
 
 ### 2. Set up the database
 
-Create a free [Neon](https://neon.tech) Postgres project, then:
+Create a free [Neon](https://neon.tech) Postgres project, then copy
+`.env.example` to `.env` in **three places** — there's no single root
+`.env` that everything reads from, since each tool loads env vars from its
+own working directory:
 
 ```bash
-cp .env.example .env
-# fill in DATABASE_URL and DIRECT_URL from your Neon dashboard
-# generate a NEXTAUTH_SECRET: openssl rand -base64 32
+cp .env.example packages/db/.env      # read by the Prisma CLI (db:push, db:seed, etc.)
+cp .env.example apps/booking/.env     # read by the Next.js dev/build process
+cp .env.example apps/corporate/.env   # same
+```
 
+Fill in `DATABASE_URL` and `DIRECT_URL` from your Neon dashboard in all
+three (same values in each — both apps and the Prisma CLI point at the same
+database). Generate a `NEXTAUTH_SECRET` for `apps/booking/.env` with
+`openssl rand -base64 32`.
+
+```bash
 pnpm db:generate
 pnpm db:push     # creates tables from packages/db/prisma/schema.prisma
 pnpm db:seed     # seeds Old West Studio Lofts + demo listings + demo accounts
 ```
+
+If `db:push`/`db:seed` fail with `Environment variable not found:
+DATABASE_URL`, it means `packages/db/.env` specifically is missing or
+empty — that's the one the Prisma CLI actually reads, independent of the
+two Next.js apps' own `.env` files.
 
 Seeded portal accounts (password `Demo1234!` for all): `guest@example.com`,
 `owner@813bnb.com`, `staff@813bnb.com`.
