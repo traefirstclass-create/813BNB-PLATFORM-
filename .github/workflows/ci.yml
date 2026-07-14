@@ -25,14 +25,17 @@ jobs:
       # pnpm/action-setup to fail outright with a conflicting-version error.
       - uses: pnpm/action-setup@v4
 
-      # No cache: "pnpm" here — actions/setup-node's built-in pnpm caching
-      # failed against pnpm 11.x (likely a version-detection mismatch in
-      # that action, since pnpm 11 is very new). Caching is a speed
-      # optimization, not a correctness requirement, so dropping it rather
-      # than debugging blind against an external action's internals.
+      # pnpm 11.x requires Node.js >= 22.13 (it uses the node:sqlite
+      # built-in, only available from Node 22.5+) — this was the actual
+      # root cause of CI failing outright at "Install dependencies" with
+      # "Error [ERR_UNKNOWN_BUILTIN_MODULE]: No such built-in module:
+      # node:sqlite" under the previous node-version: 20. It also explains
+      # why actions/setup-node's pnpm caching appeared broken earlier: it
+      # was hitting the same crash, not a caching bug.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

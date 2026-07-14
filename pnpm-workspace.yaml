@@ -1,6 +1,23 @@
 packages:
   - "apps/*"
   - "packages/*"
+# The lockfile has only ever been generated on macOS (darwin-arm64) dev
+# machines. By default pnpm only locks platform-specific optional
+# dependencies (esbuild, @next/swc, native binaries, etc.) for whichever
+# platform generated the lockfile — so GitHub Actions' Linux runner hit
+# "not in lockfile" failures under --frozen-lockfile. This forces pnpm to
+# also resolve and lock Linux/x64/glibc variants (GitHub's ubuntu-latest)
+# alongside darwin, so the lockfile stays valid on both.
+supportedArchitectures:
+  os:
+    - current
+    - linux
+  cpu:
+    - current
+    - x64
+  libc:
+    - current
+    - glibc
 allowBuilds:
   '@prisma/client': true
   '@prisma/engines': true
