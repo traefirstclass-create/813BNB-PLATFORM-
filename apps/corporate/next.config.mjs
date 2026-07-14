@@ -14,8 +14,8 @@ const nextConfig = {
   },
   // See apps/booking/next.config.mjs for why this is needed — same fix,
   // same pnpm-monorepo Prisma-engine-binary bundling issue.
-  outputFileTracingRoot: monorepoRoot,
   experimental: {
+    outputFileTracingRoot: monorepoRoot,
     outputFileTracingIncludes: {
       "/**": ["./packages/db/src/generated/prisma/**/*"],
     },

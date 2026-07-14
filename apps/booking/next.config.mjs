@@ -19,8 +19,8 @@ const nextConfig = {
   // query-engine binary actually ships with the deployed function — without
   // it, every DB-touching route 500s in production with "could not locate
   // the Query Engine for runtime ...". See CONTENT-TODO.md.
-  outputFileTracingRoot: monorepoRoot,
   experimental: {
+    outputFileTracingRoot: monorepoRoot,
     outputFileTracingIncludes: {
       "/**": ["./packages/db/src/generated/prisma/**/*"],
     },
