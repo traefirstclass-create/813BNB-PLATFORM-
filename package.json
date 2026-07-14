@@ -1,0 +1,31 @@
+{
+  "name": "813bnb-platform",
+  "private": true,
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "packageManager": "pnpm@11.11.0",
+  "scripts": {
+    "postinstall": "pnpm db:generate",
+    "dev": "turbo run dev",
+    "dev:booking": "turbo run dev --filter=@813bnb/booking",
+    "dev:corporate": "turbo run dev --filter=@813bnb/corporate",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "db:generate": "pnpm --filter @813bnb/db generate",
+    "db:push": "pnpm --filter @813bnb/db push",
+    "db:migrate": "pnpm --filter @813bnb/db migrate",
+    "db:seed": "pnpm --filter @813bnb/db seed",
+    "db:studio": "pnpm --filter @813bnb/db studio",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0"
+  }
+}
