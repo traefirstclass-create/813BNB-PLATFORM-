@@ -25,10 +25,14 @@ jobs:
       # pnpm/action-setup to fail outright with a conflicting-version error.
       - uses: pnpm/action-setup@v4
 
+      # No cache: "pnpm" here — actions/setup-node's built-in pnpm caching
+      # failed against pnpm 11.x (likely a version-detection mismatch in
+      # that action, since pnpm 11 is very new). Caching is a speed
+      # optimization, not a correctness requirement, so dropping it rather
+      # than debugging blind against an external action's internals.
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
