@@ -1,35 +1,37 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Brand hex values below were extracted by eye from the 813BNB logo image
- * shared in chat (house-pin icon + "813" roundel + "BNB" wordmark), not
- * pixel-sampled from the source file. Treat as provisional until confirmed
- * with a color picker against the original logo asset — see CONTENT-TODO.md.
+ * Brand hex values below were pixel-sampled directly from the source logo
+ * file (813BNBLOGO.png — see packages/ui/assets/logo.png) by averaging the
+ * solid-fill pixels of the pin/roof and the "BNB" wordmark, excluding
+ * background and outline pixels. teal-600 (#177189) and orange-500
+ * (#E48727) are the exact sampled anchors; the rest of each ramp is
+ * generated from those anchors at fixed HSL lightness steps.
  */
 const brand = {
   teal: {
-    50: "#EEF5F6",
-    100: "#D6E7E9",
-    200: "#AECED2",
-    300: "#82B2B8",
-    400: "#569399",
-    500: "#387680",
-    600: "#2C6E7F", // primary brand teal
-    700: "#255B69",
-    800: "#1E4750",
-    900: "#173539",
+    50: "#E9F8FB",
+    100: "#CBEDF6",
+    200: "#96DBED",
+    300: "#5DC8E4",
+    400: "#24B0D6",
+    500: "#1C89A6",
+    600: "#177189", // primary brand teal (exact pixel sample)
+    700: "#125A6D",
+    800: "#0E4453",
+    900: "#0A2F39",
   },
   orange: {
-    50: "#FDF3E9",
-    100: "#FAE1C3",
-    200: "#F4C68C",
-    300: "#EEAA5C",
-    400: "#E5983F",
-    500: "#E08A3C", // primary brand orange
-    600: "#C4762F",
-    700: "#9C5D24",
-    800: "#74451B",
-    900: "#4C2E12",
+    50: "#FCF0E4",
+    100: "#F6D7B6",
+    200: "#EDB172",
+    300: "#E79541",
+    400: "#E48625",
+    500: "#E48727", // primary brand orange (exact pixel sample)
+    600: "#C77219",
+    700: "#9F5A14",
+    800: "#7A460F",
+    900: "#522E0A",
   },
 };
 

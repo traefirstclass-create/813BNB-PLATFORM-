@@ -5,15 +5,15 @@
 /*
  * Brand tokens as CSS custom properties, mirroring packages/config/tailwind.preset.ts
  * so non-Tailwind contexts (inline SVG, email templates, PDF generation) stay
- * in sync with the Tailwind theme. Hex values are a best-effort eyeball
- * extraction from the logo shared in chat — confirm against the source file
- * and update both this file and tailwind.preset.ts together. See CONTENT-TODO.md.
+ * in sync with the Tailwind theme. Hex values are pixel-sampled directly
+ * from the source logo file (813BNBLOGO.png) — update both this file and
+ * tailwind.preset.ts together if the logo ever changes.
  */
 :root {
-  --brand-teal: #2c6e7f;
-  --brand-teal-dark: #1e4750;
-  --brand-orange: #e08a3c;
-  --brand-orange-dark: #9c5d24;
+  --brand-teal: #177189;
+  --brand-teal-dark: #0e4453;
+  --brand-orange: #e48727;
+  --brand-orange-dark: #9f5a14;
 
   --color-page-bg: #faf8f5; /* warmwhite */
   --color-surface: #ffffff;

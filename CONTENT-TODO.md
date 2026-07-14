@@ -59,12 +59,13 @@ fields are placeholders:
 
 ## Photos & branding
 
-- **Logo**: `packages/ui/src/components/Logo.tsx` and
-  `packages/config/tailwind.preset.ts` / `packages/ui/src/styles/globals.css`
-  use hex values (`#2C6E7F` teal, `#E08A3C` orange) eyeballed from the logo
-  image shared in chat — not pixel-sampled from the source file. Confirm
-  exact values with a color picker against the original logo asset (ideally
-  an SVG/EPS/high-res PNG) and update both files together.
+- ~~**Logo colors**~~ — resolved. `packages/ui/assets/logo.png` is the real
+  source file; `packages/config/tailwind.preset.ts` and
+  `packages/ui/src/styles/globals.css` use `#177189` (teal) / `#E48727`
+  (orange), pixel-sampled directly from it. `Logo.tsx` is still a hand-drawn
+  SVG recreation of the mark (not an exact vector trace) — swap it for a
+  real vector/EPS export if one ever becomes available, for pixel-exact
+  proportions at large sizes.
 - **All listing photos** are Unsplash stock images marked with a visible
   "Sample Photo" badge (`PropertyCard`, property detail gallery) and
   `isPlaceholder: true` in the database. Replace via the seed data

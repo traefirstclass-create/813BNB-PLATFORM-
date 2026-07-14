@@ -7,10 +7,12 @@ interface LogoProps {
 }
 
 /**
- * Best-effort vector recreation of the 813BNB house-pin mark shared in chat:
- * a map-pin silhouette in brand teal with an orange roof accent, containing
- * a teal "813" roundel, paired with a bold "BNB" wordmark. Swap for the
- * original vector/EPS file when available — see CONTENT-TODO.md.
+ * Vector recreation of the 813BNB house-pin mark (source raster at
+ * packages/ui/assets/logo.png): a map-pin silhouette in brand teal with an
+ * orange roof accent, containing a teal "813" roundel, paired with the
+ * "BNB" wordmark (B teal / N orange / B teal). Colors are pixel-sampled
+ * from the source file. Swap for a real vector/EPS export if one becomes
+ * available, for pixel-exact proportions at large sizes.
  */
 export function Logo({ className, markOnly = false }: LogoProps) {
   return (
